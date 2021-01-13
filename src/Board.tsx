@@ -16,11 +16,7 @@ class Board extends React.Component {
 
     init() {
         const board = this.boardRef.current;
-
-        // board.style.setProperty("", "")
-        console.log(board)
-        board.style.setProperty("--colNum", "3")
-
+        board.style.setProperty("--colNum", "3");
     }
 
     render() {
