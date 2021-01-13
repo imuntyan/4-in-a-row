@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/4-in-a-row.iml
+/4-in-a-row.ipr
+/4-in-a-row.iws
+/.eslintcache
