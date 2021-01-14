@@ -3,6 +3,7 @@ import './Field.css';
 import Piece from "./Piece";
 
 interface FieldProps {
+    col: number
     value?: number
 }
 class Field extends React.Component<FieldProps> {

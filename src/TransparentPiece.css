@@ -1,0 +1,10 @@
+.piece {
+    --background-white: #F9F9F9;
+    --background-color: var(--background-white);
+    margin-left: 9px;
+    margin-top: 9px;
+    width: 100px;
+    height: 100px;
+    background: var(--background-color);
+    border-radius: 50%
+}

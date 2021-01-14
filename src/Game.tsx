@@ -24,13 +24,20 @@ class Game extends React.Component {
 
     }
 
-    componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any) {
-    }
+    undoHandler = (e: React.MouseEvent) => {}
+    newGameHandler = (e: React.MouseEvent) => {}
 
 
     render() {
         return (
-            <Board rowNum={this.rowNum} colNum={this.colNum} playerNum={this.playerNum} fields={this.fields} />
+            <Board
+                rowNum={this.rowNum}
+                colNum={this.colNum}
+                playerNum={this.playerNum}
+                fields={this.fields}
+                undoHandler={this.undoHandler}
+                newGameHandler={this.newGameHandler}
+            />
         )
     }
 }
