@@ -4,6 +4,7 @@ import './TransparentPiece.css';
 interface TransparentPieceProps {
     col: number
     currentCol: number | undefined
+    player: number
 }
 class TransparentPiece extends React.Component<TransparentPieceProps> {
     pieceRef: any;
@@ -15,10 +16,14 @@ class TransparentPiece extends React.Component<TransparentPieceProps> {
 
     componentDidUpdate(prevProps: Readonly<TransparentPieceProps>, prevState: Readonly<{}>, snapshot?: any) {
         const piece = this.pieceRef.current;
-        if (this.props.col === this.props.currentCol)
-            piece.style.setProperty("--background-color", "red")
-        else
+        if (this.props.col !== this.props.currentCol)
             piece.style.setProperty("--background-color", "var(--background-white)");
+        else {
+            let color;
+            if (this.props.player === 1) color = "red";
+            else color = "blue";
+            piece.style.setProperty("--background-color", color);
+        }
     }
 
     render() {

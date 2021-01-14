@@ -6,6 +6,8 @@ interface TransparentFieldProps {
     col: number
     currentCol: number | undefined
     player: number
+    onMouseEnter: () => void
+    onClick: () => void
 }
 class TransparentField extends React.Component<TransparentFieldProps> {
     constructor(props: TransparentFieldProps) {
@@ -14,8 +16,8 @@ class TransparentField extends React.Component<TransparentFieldProps> {
 
     render() {
         return (
-            <div className="transparent-field">
-                <TransparentPiece col={this.props.col} currentCol={this.props.currentCol} />
+            <div onMouseEnter={this.props.onMouseEnter} onClick={this.props.onClick} className="transparent-field">
+                <TransparentPiece col={this.props.col} currentCol={this.props.currentCol} player={this.props.player} />
             </div>
         )
     }

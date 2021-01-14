@@ -7,9 +7,11 @@ interface BoardProps {
     rowNum: number
     colNum: number
     playerNum: number
+    player: number
     fields: (number | undefined)[]
     undoHandler: (e: MouseEvent) => void
     newGameHandler: (e: MouseEvent) => void
+    pieceDroppedHandler: (col: number) => void
 }
 interface BoardState {
     currentCol: number | undefined
@@ -42,6 +44,11 @@ class Board extends React.Component<BoardProps> {
         this.setState({currentCol: col})
     }
 
+    onClick = () => {
+        if (this.state.currentCol !== undefined)
+            this.props.pieceDroppedHandler(this.state.currentCol)
+    }
+
     renderField(i: number) {
         const col = i % this.props.colNum;
         return (
@@ -50,6 +57,7 @@ class Board extends React.Component<BoardProps> {
                 value={this.props.fields[i]}
                 col={col}
                 onMouseEnter={this.onMouseEnter(i)}
+                onClick={this.onClick}
             />
         );
     }
@@ -58,9 +66,11 @@ class Board extends React.Component<BoardProps> {
         return (
             <TransparentField
                 key={i}
-                player={1}
+                player={this.props.player}
                 col={col}
                 currentCol={this.state.currentCol}
+                onMouseEnter={this.onMouseEnter(i)}
+                onClick={this.onClick}
             />
         );
     }
