@@ -14,12 +14,12 @@ class Game extends React.Component<any, GameState> {
 
     constructor(props: any) {
         super(props);
-        const colNum = 4
+        const colNum = 6
         const rowNum = 5
         this.state = {
             config: {
-                colNum: 4,
-                rowNum: 5,
+                colNum: colNum,
+                rowNum: rowNum,
                 playerNum: 2
             },
             player: 0,
@@ -27,18 +27,43 @@ class Game extends React.Component<any, GameState> {
         }
     }
 
+    indexToCoord(index: number) {
+       const [col, row] =  [index % this.state.config.colNum, index / this.state.config.colNum]
+        return [col, row]
+    }
+    coordToIndex(row: number, col: number) {
+        return row * this.state.config.colNum + col
+    }
+
+
     undoHandler = (e: React.MouseEvent) => {}
     newGameHandler = (e: React.MouseEvent) => {}
 
-    pieceDroppedHandler = (column: number) => {
-        const newFields = this.state.fields.slice();
-        newFields[column] = this.state.player;
-        this.setState({
-            config: this.state.config,
-            player: (this.state.player + 1) % 2,
-            fields: newFields
-        })
+    pieceDroppedHandler = (col: number) => {
+        const row = this.placePiece(col);
+        if (row !== -1) {
+            const ind = this.coordToIndex(row, col);
+            const newFields = this.state.fields.slice();
+            newFields[ind] = this.state.player;
+            this.setState({
+                config: this.state.config,
+                player: (this.state.player + 1) % 2,
+                fields: newFields
+            })
+        }
     }
+
+    placePiece(col: number) {
+        let row = 0
+        while (row < this.state.config.rowNum) {
+            const ind = this.coordToIndex(row, col)
+            if (this.state.fields[ind] !== undefined) return (row - 1);
+            row += 1;
+        }
+        return (row - 1);
+    }
+
+
 
 
     render() {
