@@ -12,21 +12,10 @@ class Game extends React.Component {
         this.state = {
             fields: Array
         }
-
-        setTimeout(() => {
-            this.fields[0] = 1
-            this.fields[1] = 2
-            this.setState({
-                fields: this.fields
-            })
-
-        }, 1000)
-
     }
 
     undoHandler = (e: React.MouseEvent) => {}
     newGameHandler = (e: React.MouseEvent) => {}
-
 
     render() {
         return (

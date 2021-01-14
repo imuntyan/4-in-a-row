@@ -2,7 +2,8 @@ import React, {createRef} from 'react';
 import './TransparentPiece.css';
 
 interface TransparentPieceProps {
-    value?: number
+    col: number
+    currentCol: number | undefined
 }
 class TransparentPiece extends React.Component<TransparentPieceProps> {
     pieceRef: any;
@@ -14,12 +15,10 @@ class TransparentPiece extends React.Component<TransparentPieceProps> {
 
     componentDidUpdate(prevProps: Readonly<TransparentPieceProps>, prevState: Readonly<{}>, snapshot?: any) {
         const piece = this.pieceRef.current;
-        if (this.props.value === undefined)
-            piece.style.setProperty("--background-color", "var(--background-white)")
-        else if (this.props.value === 1)
-            piece.style.setProperty("--background-color", "red");
-        else if (this.props.value === 2)
-            piece.style.setProperty("--background-color", "blue");
+        if (this.props.col === this.props.currentCol)
+            piece.style.setProperty("--background-color", "red")
+        else
+            piece.style.setProperty("--background-color", "var(--background-white)");
     }
 
     render() {

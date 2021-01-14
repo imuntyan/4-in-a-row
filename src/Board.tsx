@@ -11,11 +11,17 @@ interface BoardProps {
     undoHandler: (e: MouseEvent) => void
     newGameHandler: (e: MouseEvent) => void
 }
-
+interface BoardState {
+    currentCol: number | undefined
+}
 class Board extends React.Component<BoardProps> {
 
     boardRef: any;
     topRowRef: any;
+
+    state: BoardState = {
+        currentCol: undefined
+    }
 
     constructor(props: BoardProps) {
         super(props);
@@ -31,6 +37,11 @@ class Board extends React.Component<BoardProps> {
         topRow.style.setProperty("--colNum", this.props.colNum.toString())
     }
 
+    onMouseEnter = (i: number) => () => {
+        const col = i % this.props.colNum;
+        this.setState({currentCol: col})
+    }
+
     renderField(i: number) {
         const col = i % this.props.colNum;
         return (
@@ -38,6 +49,7 @@ class Board extends React.Component<BoardProps> {
                 key={i}
                 value={this.props.fields[i]}
                 col={col}
+                onMouseEnter={this.onMouseEnter(i)}
             />
         );
     }
@@ -48,6 +60,7 @@ class Board extends React.Component<BoardProps> {
                 key={i}
                 player={1}
                 col={col}
+                currentCol={this.state.currentCol}
             />
         );
     }

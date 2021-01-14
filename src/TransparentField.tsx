@@ -4,6 +4,7 @@ import TransparentPiece from "./TransparentPiece";
 
 interface TransparentFieldProps {
     col: number
+    currentCol: number | undefined
     player: number
 }
 class TransparentField extends React.Component<TransparentFieldProps> {
@@ -12,10 +13,9 @@ class TransparentField extends React.Component<TransparentFieldProps> {
     }
 
     render() {
-
         return (
             <div className="transparent-field">
-                <TransparentPiece value={undefined} />
+                <TransparentPiece col={this.props.col} currentCol={this.props.currentCol} />
             </div>
         )
     }
