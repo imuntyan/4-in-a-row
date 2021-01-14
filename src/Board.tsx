@@ -24,9 +24,6 @@ class Board extends React.Component<BoardProps> {
         board.style.setProperty("--rowNum", this.props.rowNum.toString());
     }
 
-    componentDidUpdate(prevProps: Readonly<BoardProps>, prevState: Readonly<{}>, snapshot?: any) {
-    }
-
     renderField(i: number) {
         return (
             <Field

@@ -6,14 +6,9 @@ interface FieldProps {
     value?: number
 }
 class Field extends React.Component<FieldProps> {
-
     constructor(props: FieldProps) {
         super(props);
     }
-
-    componentDidMount() {
-    }
-
 
     render() {
 
