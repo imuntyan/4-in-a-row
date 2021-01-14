@@ -6,6 +6,7 @@ interface BoardProps {
     rowNum: number
     colNum: number
     playerNum: number
+    fields: (number|undefined)[]
 }
 class Board extends React.Component<BoardProps> {
 
@@ -26,11 +27,19 @@ class Board extends React.Component<BoardProps> {
     componentDidUpdate(prevProps: Readonly<BoardProps>, prevState: Readonly<{}>, snapshot?: any) {
     }
 
-    render() {
+    renderField(i: number) {
+        return (
+            <Field
+                key={i}
+                value={this.props.fields[i]}
+            />
+        );
+    }
 
+    render() {
         return (
             <div ref={this.boardRef} className="game-board">
-                {Array(this.props.colNum * this.props.rowNum).fill(<Field />)}
+                {Array.from(Array(this.props.colNum * this.props.rowNum)).map( (x, index) =>  this.renderField(index))}
             </div>
         )
     }
