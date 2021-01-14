@@ -1,37 +1,36 @@
 import React, {createRef} from 'react';
 import './Board.css';
+import Field from "./Field";
 
-class Board extends React.Component {
+interface BoardProps {
+    rowNum: number
+    colNum: number
+    playerNum: number
+}
+class Board extends React.Component<BoardProps> {
 
     boardRef: any;
 
-    constructor(props: any) {
+    constructor(props: BoardProps) {
         super(props);
         this.boardRef = createRef()
+
     }
 
     componentDidMount() {
-        this.init();
+        const board = this.boardRef.current;
+        board.style.setProperty("--colNum", this.props.colNum.toString());
+        board.style.setProperty("--rowNum", this.props.rowNum.toString());
     }
 
-    init() {
-        const board = this.boardRef.current;
-        board.style.setProperty("--colNum", "3");
+    componentDidUpdate(prevProps: Readonly<BoardProps>, prevState: Readonly<{}>, snapshot?: any) {
     }
 
     render() {
 
         return (
             <div ref={this.boardRef} className="game-board">
-                <div className="box"></div>
-                <div className="box"></div>
-                <div className="box"></div>
-                <div className="box"></div>
-                <div className="box"></div>
-                <div className="box"></div>
-                <div className="box"></div>
-                <div className="box"></div>
-                <div className="box"></div>
+                {Array(this.props.colNum * this.props.rowNum).fill(<Field />)}
             </div>
         )
     }
