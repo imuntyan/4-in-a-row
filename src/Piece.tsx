@@ -16,9 +16,9 @@ class Piece extends React.Component<PieceProps> {
         const piece = this.pieceRef.current;
         if (this.props.value === undefined)
             piece.style.setProperty("--background-color", "var(--background-white)")
-        else if (this.props.value === 1)
+        else if (this.props.value === 0)
             piece.style.setProperty("--background-color", "red");
-        else if (this.props.value === 2)
+        else if (this.props.value === 1)
             piece.style.setProperty("--background-color", "blue");
     }
 

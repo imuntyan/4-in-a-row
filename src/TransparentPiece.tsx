@@ -20,7 +20,7 @@ class TransparentPiece extends React.Component<TransparentPieceProps> {
             piece.style.setProperty("--background-color", "var(--background-white)");
         else {
             let color;
-            if (this.props.player === 1) color = "red";
+            if (this.props.player === 0) color = "red";
             else color = "blue";
             piece.style.setProperty("--background-color", color);
         }
