@@ -14,8 +14,8 @@ class Game extends React.Component<any, GameState> {
 
     constructor(props: any) {
         super(props);
-        const colNum = 6
-        const rowNum = 5
+        const colNum = 7
+        const rowNum = 6
         this.state = {
             config: {
                 colNum: colNum,
@@ -42,6 +42,8 @@ class Game extends React.Component<any, GameState> {
     pieceDroppedHandler = (col: number) => {
         const row = this.placePiece(col);
         if (row !== -1) {
+            const matchingLines = this.checkWinner(row, col, this.state.player);
+            console.log(matchingLines);
             const ind = this.coordToIndex(row, col);
             const newFields = this.state.fields.slice();
             newFields[ind] = this.state.player;
@@ -61,6 +63,49 @@ class Game extends React.Component<any, GameState> {
             row += 1;
         }
         return (row - 1);
+    }
+
+    gen(rowStep: number, colStep: number) {
+        function g(rowStep: number, colStep: number) {
+            return function* (row: number, col: number){
+                while(true) {
+                    row += rowStep
+                    col += colStep
+                    yield [row, col]
+                }
+            }
+        }
+        return [g(rowStep, colStep), g(-rowStep, -colStep)]
+    }
+
+
+    checkWinner(_row: number, _col: number, _player: number) {
+        const dirs = [
+            this.gen(1, 0),
+            this.gen(0, 1),
+            this.gen(1,1),
+            this.gen(-1, 1)
+        ];
+        return dirs.reduce( (acc: number[][], oppositeDirs: ((row: number, col: number) => Generator<number[], void, unknown>)[]) => {
+            const acc2: any = oppositeDirs.reduce( (acc2: any, dir: ((row: number, col: number) => Generator<number[], void, unknown>)) => {
+                const gen = dir(_row, _col)
+                while(true) {
+                    const [row, col] = gen.next().value as number[];
+                    if (row >= this.state.config.rowNum || row < 0 || col >= this.state.config.colNum || col < 0)
+                        return acc2;
+                    const index = this.coordToIndex(row, col);
+                    if (this.state.fields[index] === _player) {
+                        acc2.matchingLine.push(index);
+                        acc2.matches += 1;
+                    }
+                    else return acc2;
+                }
+            }, {matchingLine: [this.coordToIndex(_row, _col)], matches: 1});
+            if (acc2.matches >= 4) {
+                acc.push(acc2.matchingLine);
+            }
+            return acc;
+        }, []);
     }
 
 
